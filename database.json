@@ -1,0 +1,336 @@
+{
+  "users": [
+    {
+      "username": "testboy",
+      "password": "$2b$12$QJrguq0WzVQATt1zmpdD6eM1yxeM2PMzEZvxP6OkbTBsQmQOHNa7O",
+      "gender": "boy",
+      "lastSeen": null,
+      "isOnline": false
+    },
+    {
+      "username": "lubbuu",
+      "password": "$2b$12$27ELCJWHysOxW9fzpHBFueYd1o9boQtZtD9CgnyTNFl82vbqf5QOW",
+      "gender": "girl",
+      "lastSeen": "2026-04-12T18:38:45.010Z",
+      "isOnline": false
+    },
+    {
+      "username": "negaa",
+      "password": "$2b$12$pgL6w7xH2uhfAIgXXAuR/.7YWmwzUyooRPOm2pIY5BQCOCVaI/KmC",
+      "gender": "boy",
+      "lastSeen": "2026-04-24T20:53:56.848Z",
+      "isOnline": true
+    },
+    {
+      "username": "burte",
+      "password": "$2b$12$3TfdAsewHGqwFOtYa31h3eAGlGktmIRKsaB.3Ap8CWEZhIRjs.5yC",
+      "gender": "girl",
+      "lastSeen": "2026-04-12T12:53:37.443Z",
+      "isOnline": false,
+      "pendingFriendRequests": [],
+      "friends": []
+    }
+  ],
+  "messages": [
+    {
+      "_id": "928e54bb-d70b-4aa4-b3a9-261b66a49e33",
+      "sender": "negaa",
+      "content": "hy",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T13:03:23.075Z",
+      "read": true
+    },
+    {
+      "_id": "ebac0af0-65cb-4d1c-948e-df52d4e8833d",
+      "sender": "lubbuu",
+      "content": "",
+      "fileType": "image",
+      "fileName": "ideogram-v3.0_A_beautifully_arranged_pile_of_fresh_wheat_flour_gently_poured_onto_a_natural_wo-0.jpg",
+      "filePath": "/uploads/c2236b58-f1bc-43a3-b049-67d003fd481e.jpg",
+      "timestamp": "2026-04-12T13:04:02.771Z",
+      "read": true
+    },
+    {
+      "_id": "de4df173-e281-45f9-830c-b3c1056796a0",
+      "sender": "negaa",
+      "content": "❤️",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T13:07:32.451Z",
+      "read": true
+    },
+    {
+      "_id": "eceebc77-0667-4edf-8831-ca9a4326fe44",
+      "sender": "negaa",
+      "content": "hy",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T13:15:58.585Z",
+      "read": true
+    },
+    {
+      "_id": "2224a752-1d9f-4092-b41a-d45f485285fa",
+      "sender": "lubbuu",
+      "content": "akkami lubbuu koo",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T13:25:00.532Z",
+      "read": true
+    },
+    {
+      "_id": "2094ab47-9764-4fd0-9817-e8da81f5b725",
+      "sender": "negaa",
+      "content": "akkami jirta",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:12:38.685Z",
+      "read": true
+    },
+    {
+      "_id": "19b3cdd8-163a-48ea-9a5e-092d443b3976",
+      "sender": "lubbuu",
+      "content": "/ai Give me romantic advice for our relationship",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:28:54.232Z",
+      "read": true
+    },
+    {
+      "_id": "911f78a4-c6f9-4152-bb40-d9bb6c172b1f",
+      "sender": "Gorsa Jaalalaa",
+      "content": "AI service not available - please configure OPENAI_API_KEY in .env file",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:28:54.235Z",
+      "read": true
+    },
+    {
+      "_id": "57ce7e01-1d8a-49ae-93ba-1a67e7ad21e7",
+      "sender": "Gorsa Jaalalaa",
+      "content": "AI service not available - please configure OPENAI_API_KEY in .env file",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:28:54.236Z",
+      "read": true
+    },
+    {
+      "_id": "97e80d86-c1b9-4ab8-92ab-a60922a61e3b",
+      "sender": "lubbuu",
+      "content": "/quote",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:29:34.826Z",
+      "read": true
+    },
+    {
+      "_id": "dfee85ab-ee69-4411-8203-8a34a1d97d3a",
+      "sender": "Gorsa Jaalalaa",
+      "content": "AI service not available - please configure OPENAI_API_KEY in .env file",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:29:34.829Z",
+      "read": true
+    },
+    {
+      "_id": "6a276a65-d4e6-43de-b809-a7b37d5f0227",
+      "sender": "Gorsa Jaalalaa",
+      "content": "💕 Jaalala kee nagaan itti fufadhu! (May your love continue peacefully!)",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:29:34.830Z",
+      "read": true
+    },
+    {
+      "_id": "ca696f90-b1bc-4041-9072-945551a7a3a4",
+      "sender": "lubbuu",
+      "content": "/quote",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:29:56.364Z",
+      "read": true
+    },
+    {
+      "_id": "2850b924-e706-4963-b2b9-d674ff53f913",
+      "sender": "Gorsa Jaalalaa",
+      "content": "AI service not available - please configure OPENAI_API_KEY in .env file",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:29:56.366Z",
+      "read": true
+    },
+    {
+      "_id": "8c797ea8-f7bd-490c-b601-2170dc1189d3",
+      "sender": "Gorsa Jaalalaa",
+      "content": "💕 Jaalala kee nagaan itti fufadhu! (May your love continue peacefully!)",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:29:56.367Z",
+      "read": true
+    },
+    {
+      "_id": "bf028e80-af5b-4068-b6de-39f4bdb9873b",
+      "sender": "lubbuu",
+      "content": "/ai Give me romantic advice for our relationship",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:30:02.994Z",
+      "read": true
+    },
+    {
+      "_id": "ad1a737a-8e2e-4054-b490-2051fe1f2e75",
+      "sender": "Gorsa Jaalalaa",
+      "content": "AI service not available - please configure OPENAI_API_KEY in .env file",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:30:02.997Z",
+      "read": true
+    },
+    {
+      "_id": "ca9cf246-86fb-4694-8a1a-445fb3308be4",
+      "sender": "Gorsa Jaalalaa",
+      "content": "AI service not available - please configure OPENAI_API_KEY in .env file",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:30:02.999Z",
+      "read": true
+    },
+    {
+      "_id": "5034c95e-ffdf-4343-8ca7-9e2eda751d30",
+      "sender": "negaa",
+      "content": "/ai Give me romantic advice for our relationship",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:39:42.087Z",
+      "read": false
+    },
+    {
+      "_id": "6e025c11-bbed-4500-88a2-fb9c96e70d5e",
+      "sender": "Gorsa Jaalalaa",
+      "content": "AI service not available - please configure OPENAI_API_KEY in .env file",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:39:42.091Z",
+      "read": true
+    },
+    {
+      "_id": "5886c21e-1986-4721-bd18-6973865f73d7",
+      "sender": "Gorsa Jaalalaa",
+      "content": "AI service not available - please configure OPENAI_API_KEY in .env file",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:39:42.095Z",
+      "read": true
+    },
+    {
+      "_id": "88f5e70f-e187-47d3-9c1e-cf2d1b75712e",
+      "sender": "negaa",
+      "content": "/quote",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:42:07.780Z",
+      "read": false
+    },
+    {
+      "_id": "195977ea-9a64-442a-94ef-4108fd3e1fa5",
+      "sender": "Gorsa Jaalalaa",
+      "content": "AI service not available - please configure OPENAI_API_KEY in .env file",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:42:07.783Z",
+      "read": true
+    },
+    {
+      "_id": "631b15a2-206a-4492-88bb-58a1aa473263",
+      "sender": "Gorsa Jaalalaa",
+      "content": "💕 Jaalala kee nagaan itti fufadhu! (May your love continue peacefully!)",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:42:07.785Z",
+      "read": true
+    },
+    {
+      "_id": "1942671c-c20b-4b1f-9359-1a3f108e4161",
+      "sender": "negaa",
+      "content": "/ai Give me romantic advice for our relationship",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:42:16.729Z",
+      "read": false
+    },
+    {
+      "_id": "654a09fb-0dec-4798-bc8e-7d970d35a6ef",
+      "sender": "Gorsa Jaalalaa",
+      "content": "AI service not available - please configure OPENAI_API_KEY in .env file",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:42:16.733Z",
+      "read": true
+    },
+    {
+      "_id": "ebdbb6c3-1ebb-4521-b893-d6c571bd8846",
+      "sender": "Gorsa Jaalalaa",
+      "content": "AI service not available - please configure OPENAI_API_KEY in .env file",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:42:16.735Z",
+      "read": true
+    },
+    {
+      "_id": "e9301e1e-a4db-444e-a377-54769cfe7329",
+      "sender": "negaa",
+      "content": "/quote",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:42:46.758Z",
+      "read": false
+    },
+    {
+      "_id": "de1a1b06-38dd-4b1b-b397-5f2c2a38a407",
+      "sender": "Gorsa Jaalalaa",
+      "content": "AI service not available - please configure OPENAI_API_KEY in .env file",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:42:46.761Z",
+      "read": true
+    },
+    {
+      "_id": "bdef5c6c-77fe-444e-b115-9a0b68fd3b5f",
+      "sender": "Gorsa Jaalalaa",
+      "content": "💕 Jaalala kee nagaan itti fufadhu! (May your love continue peacefully!)",
+      "fileType": null,
+      "fileName": null,
+      "filePath": null,
+      "timestamp": "2026-04-12T18:42:46.762Z",
+      "read": true
+    }
+  ]
+}
