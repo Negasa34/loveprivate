@@ -28,16 +28,27 @@ export default function LoginForm({ onLogin, onSwitchToRegister }: LoginFormProp
         body: JSON.stringify({ email: email.trim().toLowerCase(), password }),
       });
 
-      const data = await res.json();
+      const raw = await res.text();
+      let data: { error?: string; username?: string; token?: string } = {};
+      try {
+        data = raw ? JSON.parse(raw) : {};
+      } catch {
+        data = {};
+      }
 
       if (!res.ok) {
-        setError(data.error || 'Login failed');
+        setError(data.error || 'Login service is unavailable. Please check server deployment.');
+        return;
+      }
+
+      if (!data.username || !data.token) {
+        setError('Login service returned an invalid response.');
         return;
       }
 
       onLogin(data.username, data.token);
     } catch {
-      setError('Connection error. Please try again.');
+      setError('Cannot reach login server. Please try again later.');
     } finally {
       setIsLoading(false);
     }

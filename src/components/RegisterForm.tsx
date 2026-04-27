@@ -30,16 +30,27 @@ export default function RegisterForm({ onRegister, onSwitchToLogin }: RegisterFo
         body: JSON.stringify({ email: email.trim().toLowerCase(), password, gender }),
       });
 
-      const data = await res.json();
+      const raw = await res.text();
+      let data: { error?: string; username?: string; token?: string; gender?: string } = {};
+      try {
+        data = raw ? JSON.parse(raw) : {};
+      } catch {
+        data = {};
+      }
 
       if (!res.ok) {
-        setError(data.error || 'Registration failed');
+        setError(data.error || 'Registration service is unavailable. Please check server deployment.');
+        return;
+      }
+
+      if (!data.username || !data.token || !data.gender) {
+        setError('Registration service returned an invalid response.');
         return;
       }
 
       onRegister(data.username, data.token, data.gender);
     } catch {
-      setError('Connection error. Please try again.');
+      setError('Cannot reach registration server. Please try again later.');
     } finally {
       setIsLoading(false);
     }
