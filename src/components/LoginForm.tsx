@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Heart, Lock, User } from 'lucide-react';
+import { Heart, Lock, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -11,7 +11,7 @@ interface LoginFormProps {
 }
 
 export default function LoginForm({ onLogin, onSwitchToRegister }: LoginFormProps) {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -25,7 +25,7 @@ export default function LoginForm({ onLogin, onSwitchToRegister }: LoginFormProp
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: username.trim(), password }),
+        body: JSON.stringify({ email: email.trim().toLowerCase(), password }),
       });
 
       const data = await res.json();
@@ -81,14 +81,14 @@ export default function LoginForm({ onLogin, onSwitchToRegister }: LoginFormProp
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
               <label className="text-sm font-medium text-rose-700 flex items-center gap-2">
-                <User className="w-4 h-4" />
-                Username
+                <Mail className="w-4 h-4" />
+                Email
               </label>
               <Input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter your username"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
                 className="h-12 rounded-xl border-rose-200 focus:border-rose-400 focus:ring-rose-400/20 bg-rose-50/50 placeholder:text-rose-300"
                 required
                 disabled={isLoading}
@@ -119,7 +119,7 @@ export default function LoginForm({ onLogin, onSwitchToRegister }: LoginFormProp
 
             <Button
               type="submit"
-              disabled={isLoading || !username.trim() || !password}
+              disabled={isLoading || !email.trim() || !password}
               className="w-full h-12 rounded-xl bg-linear-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-semibold shadow-lg shadow-rose-300/30 transition-all duration-300 hover:shadow-xl hover:shadow-rose-300/40 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100"
             >
               {isLoading ? (

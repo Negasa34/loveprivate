@@ -72,6 +72,7 @@ if (!fs.existsSync(UPLOAD_DIR)) {
 class InMemoryUser {
   constructor(data) {
     this.username = data.username;
+    this.email = data.email || null;
     this.password = data.password;
     this.gender = data.gender; // 'soulmate' or 'girl'
     this.lastSeen = data.lastSeen || null;
@@ -199,6 +200,14 @@ const Message = {
   updateMany: (query, update) => db.updateMany('Message', query, update),
   deleteMany: (query) => db.deleteMany('Message', query),
 };
+
+function normalizeEmail(email) {
+  return String(email || '').trim().toLowerCase();
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
 
 // ============================================================
 // AI ASSISTANT FUNCTIONS
@@ -420,38 +429,32 @@ async function startServer() {
     // --- Auth Routes ---
     server.post('/api/auth/register', async (req, res) => {
       try {
-        const { username, password, gender } = req.body;
+        const { email, password, gender } = req.body;
+        const normalizedEmail = normalizeEmail(email);
 
-        if (!username || !password || !gender) {
-          return res.status(400).json({ error: 'Username, password, and gender are required' });
+        if (!normalizedEmail || !password || !gender) {
+          return res.status(400).json({ error: 'Email, password, and gender are required' });
+        }
+
+        if (!isValidEmail(normalizedEmail)) {
+          return res.status(400).json({ error: 'Please enter a valid email address' });
         }
 
         if (!['soulmate', 'girl'].includes(gender)) {
           return res.status(400).json({ error: 'Gender must be soulmate or girl' });
         }
 
-        // Check if username already exists
-        const existingUser = await User.findOne({ username: username.trim() });
+        // Check if email already exists
+        const existingUser = await User.findOne({ email: normalizedEmail });
         if (existingUser) {
-          return res.status(409).json({ error: 'Username already exists' });
-        }
-
-        // Check total users
-        const allUsers = await User.find({});
-        if (allUsers.length >= 4) {
-          return res.status(403).json({ error: 'Registration is closed. Only four users allowed.' });
-        }
-
-        // Check gender balance (max 2 of each gender)
-        const genderCount = allUsers.filter(u => u.gender === gender).length;
-        if (genderCount >= 2) {
-          return res.status(403).json({ error: `Maximum 2 ${gender}s allowed. Need balance between soulmates and girls.` });
+          return res.status(409).json({ error: 'Email already registered' });
         }
 
         // Hash password and create user
         const hashedPassword = await bcrypt.hash(password, 12);
         const newUser = await User.create({
-          username: username.trim(),
+          username: normalizedEmail,
+          email: normalizedEmail,
           password: hashedPassword,
           gender,
           pendingFriendRequests: [],
@@ -478,14 +481,19 @@ async function startServer() {
 
     server.post('/api/auth/login', async (req, res) => {
       try {
-        const { username, password } = req.body;
+        const { email, password } = req.body;
+        const normalizedEmail = normalizeEmail(email);
 
-        if (!username || !password) {
-          return res.status(400).json({ error: 'Username and password are required' });
+        if (!normalizedEmail || !password) {
+          return res.status(400).json({ error: 'Email and password are required' });
+        }
+
+        if (!isValidEmail(normalizedEmail)) {
+          return res.status(400).json({ error: 'Please enter a valid email address' });
         }
 
         // Find user in DB
-        const user = await User.findOne({ username: username.trim() });
+        const user = await User.findOne({ email: normalizedEmail });
         if (!user) {
           return res.status(401).json({ error: 'Invalid credentials' });
         }

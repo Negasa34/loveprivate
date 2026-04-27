@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Heart, Lock, User, Users } from 'lucide-react';
+import { Heart, Lock, Mail, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -12,7 +12,7 @@ interface RegisterFormProps {
 }
 
 export default function RegisterForm({ onRegister, onSwitchToLogin }: RegisterFormProps) {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [gender, setGender] = useState('');
   const [error, setError] = useState('');
@@ -27,7 +27,7 @@ export default function RegisterForm({ onRegister, onSwitchToLogin }: RegisterFo
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: username.trim(), password, gender }),
+        body: JSON.stringify({ email: email.trim().toLowerCase(), password, gender }),
       });
 
       const data = await res.json();
@@ -83,14 +83,14 @@ export default function RegisterForm({ onRegister, onSwitchToLogin }: RegisterFo
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
               <label className="text-sm font-medium text-rose-700 flex items-center gap-2">
-                <User className="w-4 h-4" />
-                Username
+                <Mail className="w-4 h-4" />
+                Email
               </label>
               <Input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Choose a username"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
                 className="h-12 rounded-xl border-rose-200 focus:border-rose-400 focus:ring-rose-400/20 bg-rose-50/50 placeholder:text-rose-300"
                 required
                 disabled={isLoading}
@@ -137,7 +137,7 @@ export default function RegisterForm({ onRegister, onSwitchToLogin }: RegisterFo
 
             <Button
               type="submit"
-              disabled={isLoading || !username.trim() || !password || !gender}
+              disabled={isLoading || !email.trim() || !password || !gender}
               className="w-full h-12 rounded-xl bg-linear-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-semibold shadow-lg shadow-rose-300/30 transition-all duration-300 hover:shadow-xl hover:shadow-rose-300/40 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100"
             >
               {isLoading ? (
