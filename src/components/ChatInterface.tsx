@@ -11,6 +11,7 @@ import EmojiPicker from './EmojiPicker';
 import FileUpload from './FileUpload';
 import { getSocket, disconnectSocket } from '@/lib/socket';
 import { Message, PartnerStatus } from '@/types';
+import { toApiUrl } from '@/lib/api';
 
 interface ChatInterfaceProps {
   username: string;
@@ -44,7 +45,7 @@ export default function ChatInterface({ username, token, onLogout }: ChatInterfa
 
   const loadPartnerStatus = async () => {
     try {
-      const res = await fetch('/api/partner/status', {
+      const res = await fetch(toApiUrl('/api/partner/status'), {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
@@ -60,7 +61,7 @@ export default function ChatInterface({ username, token, onLogout }: ChatInterfa
 
   const loadMessages = async () => {
     try {
-      const res = await fetch('/api/messages', {
+      const res = await fetch(toApiUrl('/api/messages'), {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
@@ -211,7 +212,7 @@ export default function ChatInterface({ username, token, onLogout }: ChatInterfa
       const formData = new FormData();
       formData.append('file', file);
 
-      const res = await fetch('/api/upload', {
+      const res = await fetch(toApiUrl('/api/upload'), {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
@@ -231,7 +232,7 @@ export default function ChatInterface({ username, token, onLogout }: ChatInterfa
   // Handle logout
   const handleLogout = async () => {
     try {
-      await fetch('/api/auth/logout', {
+      await fetch(toApiUrl('/api/auth/logout'), {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -251,7 +252,7 @@ export default function ChatInterface({ username, token, onLogout }: ChatInterfa
 
     setIsSearching(true);
     try {
-      const res = await fetch(`/api/messages/search?q=${encodeURIComponent(searchQuery)}`, {
+      const res = await fetch(toApiUrl(`/api/messages/search?q=${encodeURIComponent(searchQuery)}`), {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {

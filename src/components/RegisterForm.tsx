@@ -5,6 +5,7 @@ import { Heart, Lock, Mail, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { toApiUrl } from '@/lib/api';
 
 interface RegisterFormProps {
   onRegister: (username: string, token: string, gender: string) => void;
@@ -24,7 +25,7 @@ export default function RegisterForm({ onRegister, onSwitchToLogin }: RegisterFo
     setIsLoading(true);
 
     try {
-      const res = await fetch('/api/auth/register', {
+      const res = await fetch(toApiUrl('/api/auth/register'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email.trim().toLowerCase(), password, gender }),

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import LoginForm from '@/components/LoginForm';
 import RegisterForm from '@/components/RegisterForm';
 import ChatInterface from '@/components/ChatInterface';
+import { toApiUrl } from '@/lib/api';
 
 export default function Home() {
   const [user, setUser] = useState<{ username: string; token: string } | null>(null);
@@ -18,7 +19,7 @@ export default function Home() {
         const storedUsername = localStorage.getItem('chat_username');
         if (storedToken && storedUsername) {
           // Verify token with server
-          const res = await fetch('/api/auth/me', {
+          const res = await fetch(toApiUrl('/api/auth/me'), {
             headers: { Authorization: `Bearer ${storedToken}` },
           });
           if (res.ok) {
