@@ -2,7 +2,7 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const next = require('next');
-// const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
@@ -19,6 +19,7 @@ const OpenAI = require('openai');
 const JWT_SECRET = process.env.JWT_SECRET || 'romantic-chat-secret-key-2024';
 const PORT = parseInt(process.env.PORT || '3000', 10);
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const MONGODB_URI = process.env.MONGODB_URI;
 const ALLOWED_USERS = [
   { username: 'soulmate', password: 'love2024' },
   { username: 'girl', password: 'love2024' },
@@ -182,24 +183,68 @@ class InMemoryDB {
   }
 }
 
-const db = new InMemoryDB();
+let db = null;
+let User = null;
+let Message = null;
+let databaseMode = 'unknown';
 
-// Mock Mongoose models
-const User = {
-  findOne: (query) => db.findOne('User', query),
-  create: (data) => db.create('User', data),
-  find: (query) => db.find('User', query),
-  updateOne: (query, update) => db.updateOne('User', query, update),
-};
+async function initializeDatabase() {
+  if (MONGODB_URI && MONGODB_URI.trim()) {
+    try {
+      await mongoose.connect(MONGODB_URI, {
+        serverSelectionTimeoutMS: 10000,
+      });
 
-const Message = {
-  find: (query) => db.find('Message', query),
-  findById: (id) => ({ lean: async () => db.findOne('Message', { _id: id }) }),
-  create: (data) => db.create('Message', data),
-  updateOne: (query, update) => db.updateOne('Message', query, update),
-  updateMany: (query, update) => db.updateMany('Message', query, update),
-  deleteMany: (query) => db.deleteMany('Message', query),
-};
+      const userSchema = new mongoose.Schema({
+        username: { type: String, required: true, unique: true, trim: true },
+        email: { type: String, default: null, trim: true, lowercase: true, index: true },
+        password: { type: String, required: true },
+        gender: { type: String, enum: ['soulmate', 'girl'], required: true },
+        lastSeen: { type: Date, default: null },
+        isOnline: { type: Boolean, default: false },
+        pendingFriendRequests: { type: [String], default: [] },
+        friends: { type: [String], default: [] },
+      }, { timestamps: true });
+
+      const messageSchema = new mongoose.Schema({
+        sender: { type: String, required: true },
+        content: { type: String, default: '' },
+        fileType: { type: String, enum: ['image', 'pdf', null], default: null },
+        fileName: { type: String, default: null },
+        filePath: { type: String, default: null },
+        timestamp: { type: Date, default: Date.now, index: true },
+        read: { type: Boolean, default: false },
+      }, { timestamps: false });
+
+      User = mongoose.models.User || mongoose.model('User', userSchema);
+      Message = mongoose.models.Message || mongoose.model('Message', messageSchema);
+      databaseMode = 'mongodb';
+      console.log('[DB] Connected to MongoDB');
+      return;
+    } catch (error) {
+      console.error('[DB] MongoDB connection failed, falling back to local JSON storage:', error.message);
+    }
+  }
+
+  db = new InMemoryDB();
+  User = {
+    findOne: (query) => db.findOne('User', query),
+    create: (data) => db.create('User', data),
+    find: (query) => db.find('User', query),
+    updateOne: (query, update) => db.updateOne('User', query, update),
+  };
+
+  Message = {
+    find: (query) => db.find('Message', query),
+    findById: (id) => ({ lean: async () => db.findOne('Message', { _id: id }) }),
+    create: (data) => db.create('Message', data),
+    updateOne: (query, update) => db.updateOne('Message', query, update),
+    updateMany: (query, update) => db.updateMany('Message', query, update),
+    deleteMany: (query) => db.deleteMany('Message', query),
+  };
+  databaseMode = 'json-file';
+  console.log('[DB] Using local JSON file storage');
+}
 
 function normalizeEmail(email) {
   return String(email || '').trim().toLowerCase();
@@ -400,9 +445,8 @@ const onlineUsers = new Map(); // username -> socketId
 // ============================================================
 async function startServer() {
   try {
-    // Initialize in-memory database
-    console.log('[DB] Initializing in-memory database...');
-    console.log('[DB] In-memory database initialized');
+    // Initialize database
+    await initializeDatabase();
 
     // Prepare Next.js
     await app.prepare();
@@ -984,10 +1028,10 @@ async function startServer() {
 ║     💕  Soulmate Chat Server  💕                         ║
 ║                                                          ║
 ║     Server:  http://localhost:${PORT}                      ║
-║     Database: Persistent (JSON file)                    ║
+║     Database: ${databaseMode.padEnd(42, ' ')}║
 ║     Socket:  /socket.io/                                 ║
 ║                                                          ║
-║     Registration: Open for two soulmates and two girls       ║
+║     Registration: Email based                            ║
 ║                                                          ║
 ╚══════════════════════════════════════════════════════════╝
       `);
@@ -997,12 +1041,18 @@ async function startServer() {
     process.on('SIGTERM', async () => {
       console.log('[Server] SIGTERM received, shutting down...');
       httpServer.close();
+      if (mongoose.connection.readyState === 1) {
+        await mongoose.connection.close();
+      }
       process.exit(0);
     });
 
     process.on('SIGINT', async () => {
       console.log('[Server] SIGINT received, shutting down...');
       httpServer.close();
+      if (mongoose.connection.readyState === 1) {
+        await mongoose.connection.close();
+      }
       process.exit(0);
     });
 
